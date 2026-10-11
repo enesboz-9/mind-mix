@@ -3,23 +3,12 @@ chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
 
-set REPO=https://github.com/enesboz-9/color-match-game.git
+set REPO=https://github.com/enesboz-9/mind-mix.git
 set BRANCH=main
 
 where git >nul 2>nul
 if errorlevel 1 (
   echo [HATA] Git bulunamadi. https://git-scm.com adresinden kurun.
-  pause
-  exit /b 1
-)
-
-REM Platform klasorleri yoksa proje henuz olusturulmamis demektir.
-if not exist "android" (
-  echo [UYARI] android klasoru yok. Once bu klasorde su komutu calistirin:
-  echo         flutter create --project-name mind_mix --org com.bnovative .
-  echo         flutter pub get
-  echo         dart run flutter_launcher_icons
-  echo Sonra bu dosyayi tekrar calistirin.
   pause
   exit /b 1
 )
@@ -32,7 +21,7 @@ if not exist ".git" (
   git remote add origin %REPO%
   git fetch origin
   if errorlevel 1 (
-    echo [HATA] Depoya baglanilamadi. GitHub girisinizi kontrol edin.
+    echo [HATA] Depoya baglanilamadi. Adresi ve GitHub girisinizi kontrol edin: %REPO%
     pause
     exit /b 1
   )
@@ -41,6 +30,7 @@ if not exist ".git" (
   if not errorlevel 1 git reset --soft origin/%BRANCH%
 ) else (
   git remote get-url origin >nul 2>nul || git remote add origin %REPO%
+  git remote set-url origin %REPO%
 )
 
 REM CRLF uyarilarini kapat
