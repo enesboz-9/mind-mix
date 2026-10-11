@@ -7,7 +7,7 @@ workflows:
       flutter: stable
       java: 17
       android_signing:
-        - color_match_keystore   # Codemagic > Code signing identities'te bu isimle yükle
+        - mind_mix_keystore   # Codemagic > Code signing identities'te bu isimle yükle
       groups:
         - google_play            # (opsiyonel) GCLOUD_SERVICE_ACCOUNT_CREDENTIALS burada
     triggering:
@@ -63,7 +63,7 @@ workflows:
       groups:
         - ios_signing          # içinde CERTIFICATE_PRIVATE_KEY (Secure işaretli) olacak
       vars:
-        BUNDLE_ID: "com.bnovative.colorMatchGame"
+        BUNDLE_ID: "com.bnovative.mindMix"
     triggering:
       events:
         - push

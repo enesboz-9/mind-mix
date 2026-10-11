@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'audio/audio_service.dart';
-import 'screens/home_screen.dart';
-import 'settings/app_settings.dart';
-import 'theme.dart';
+import 'core/app_settings.dart';
+import 'core/audio_service.dart';
+import 'core/theme.dart';
+import 'home/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(const [DeviceOrientation.portraitUp]);
   await AppSettings.instance.load();
-  runApp(const ColorMatchApp());
+  runApp(const MindMixApp());
 }
 
-class ColorMatchApp extends StatefulWidget {
-  const ColorMatchApp({super.key});
+class MindMixApp extends StatefulWidget {
+  const MindMixApp({super.key});
 
   @override
-  State<ColorMatchApp> createState() => _ColorMatchAppState();
+  State<MindMixApp> createState() => _MindMixAppState();
 }
 
-class _ColorMatchAppState extends State<ColorMatchApp> with WidgetsBindingObserver {
+class _MindMixAppState extends State<MindMixApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();

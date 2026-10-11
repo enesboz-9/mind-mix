@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../audio/audio_service.dart';
-import '../l10n/app_strings.dart';
+import 'audio_service.dart';
+import 'l10n.dart';
 
 /// Dil ve ses ayarları. Tercihler cihazda saklanır.
 class AppSettings extends ChangeNotifier {

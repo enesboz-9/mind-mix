@@ -2,23 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../audio/audio_service.dart';
-import '../settings/app_settings.dart';
+import '../../core/score_store.dart';
+import '../../core/sfx.dart';
 import 'choice_builder.dart';
 import 'color_utils.dart';
 import 'difficulty.dart';
 
 enum GamePhase { show, choose, reveal, over }
 
-class GameController extends ChangeNotifier {
-  GameController({ChoiceBuilder? builder}) : _builder = builder ?? ChoiceBuilder();
+class ColorMatchController extends ChangeNotifier {
+  ColorMatchController({ChoiceBuilder? builder}) : _builder = builder ?? ChoiceBuilder();
 
+  static const String gameId = 'color_match';
   static const int viewSeconds = 10;
   static const int startLives = 3;
-  static const String _bestScoreKey = 'best_score';
-  static const String _bestLevelKey = 'best_level';
 
   final ChoiceBuilder _builder;
 
@@ -28,7 +26,6 @@ class GameController extends ChangeNotifier {
   int score = 0;
   int streak = 0;
   int bestScore = 0;
-  int bestLevel = 1;
   bool isNewBest = false;
 
   late Round round;
@@ -46,13 +43,7 @@ class GameController extends ChangeNotifier {
   bool _disposed = false;
 
   Future<void> init() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      bestScore = prefs.getInt(_bestScoreKey) ?? 0;
-      bestLevel = prefs.getInt(_bestLevelKey) ?? 1;
-    } catch (_) {
-      // Kayıt okunamazsa oyun yine de çalışsın.
-    }
+    bestScore = await ScoreStore.best(gameId);
     _safeNotify();
   }
 
@@ -115,13 +106,13 @@ class GameController extends ChangeNotifier {
       lastGain = 100 + (level - 1) * 10 + skipBonus + streakBonus;
       score += lastGain;
       HapticFeedback.lightImpact();
-      _sfx(AudioService.instance.playCorrect);
+      Sfx.correct();
     } else {
       streak = 0;
       lastGain = 0;
       lives--;
       HapticFeedback.heavyImpact();
-      _sfx(AudioService.instance.playWrong);
+      Sfx.wrong();
     }
 
     phase = GamePhase.reveal;
@@ -138,27 +129,14 @@ class GameController extends ChangeNotifier {
   }
 
   Future<void> _finish() async {
-    if (score > bestScore) {
-      bestScore = score;
-      isNewBest = true;
-    }
-    if (level > bestLevel) bestLevel = level;
+    isNewBest = await ScoreStore.submit(gameId, score);
+    if (isNewBest) bestScore = score;
     phase = GamePhase.over;
     _safeNotify();
-    _sfx(AudioService.instance.playGameOver);
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(_bestScoreKey, bestScore);
-      await prefs.setInt(_bestLevelKey, bestLevel);
-    } catch (_) {}
+    Sfx.over();
   }
 
   Rgb get target => round.target;
-
-  /// Ses efektini yalnızca ses açıkken çal.
-  void _sfx(Future<void> Function() play) {
-    if (AppSettings.instance.musicOn) play();
-  }
 
   void _cancelTimers() {
     _viewTimer?.cancel();

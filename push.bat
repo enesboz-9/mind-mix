@@ -16,7 +16,7 @@ if errorlevel 1 (
 REM Platform klasorleri yoksa proje henuz olusturulmamis demektir.
 if not exist "android" (
   echo [UYARI] android klasoru yok. Once bu klasorde su komutu calistirin:
-  echo         flutter create --project-name color_match_game --org com.bnovative .
+  echo         flutter create --project-name mind_mix --org com.bnovative .
   echo         flutter pub get
   echo         dart run flutter_launcher_icons
   echo Sonra bu dosyayi tekrar calistirin.
@@ -50,7 +50,7 @@ git config core.safecrlf false
 git add -A
 git status --short
 
-set MSG=Color Match: guncelleme
+set MSG=Mind Mix: guncelleme
 if not "%~1"=="" set MSG=%*
 
 git commit -m "%MSG%"

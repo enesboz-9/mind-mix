@@ -1,4 +1,4 @@
-package com.bnovative.color_match_game
+package com.bnovative.mind_mix
 
 import io.flutter.embedding.android.FlutterActivity
 

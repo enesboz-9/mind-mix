@@ -1,67 +1,48 @@
-# Color Match
+# Mind Mix
 
-Rengi aklında tut, birbirine çok benzeyen kartlar arasından aynısını bul. Sonsuz modlu Flutter oyunu.
+Tek uygulamada 6 hızlı zeka oyunu. Çevrimdışı, hesapsız, reklamsız.
 
-## Nasıl oynanır
-1. Ekranda bir renk görünür. En fazla **10 saniye** bakabilirsin, hazırsan **Hazırım** ile erken geçebilirsin (kalan saniye başına +5 bonus).
-2. Renk kaybolur, birbirine çok yakın kartlar çıkar. Hedef rengin aynısını seç.
-3. Doğru bilirsen seviye atlarsın, yanlışta 1 can gider. 3 can biter, oyun biter. Oyun sonsuzdur.
-
-## Zorluk
-Seviye geçtikçe sırayla biri artar:
-- Kart sayısı: 4 → 9 (en fazla 9)
-- Renkler yakınlaşır: kartlar arası ΔE (CIELAB) 30 → 3
-
-9 karta ulaşıldıktan sonra her seviyede renkler biraz daha yakınlaşır.
-
-## Puan
-`100 + (seviye-1)*10 + kalan saniye*5 + (ardışık doğru-1)*10`
+| Oyun | Kısaca |
+|---|---|
+| Color Match | Rengi aklında tut, çok benzeyen kartlar arasından aynısını bul (3 can, sonsuz) |
+| Odd One Out | Izgarada biraz farklı tonu bul (30 sn, yanlış = -3 sn) |
+| Sequence Echo | Yanan sırayı izle, tekrar et (yanlış = oyun biter) |
+| Math Rush | Hızlı işlemler (45 sn, 3 can) |
+| Lights Out | Işıkları söndür, bölümler gittikçe büyür (hepsi çözülebilir) |
+| Tap Rush | Beliren daireye süresi dolmadan dokun (3 can, hızlanır) |
 
 ## Kurulum
 ```bash
-flutter create --project-name color_match_game --org com.bnovative .
 flutter pub get
-dart run flutter_launcher_icons   # logoyu uygulama ikonu yapar
+dart run flutter_launcher_icons   # assets/logo/icon.png'den ikon üretir
+flutter analyze
+flutter test
 flutter run
 ```
-`flutter create .` mevcut `lib/` ve `pubspec.yaml` dosyalarına dokunmaz, yalnızca `android/`, `ios/` gibi platform klasörlerini ekler.
+`android/` ve `ios/` klasörleri hazır geliyor (paket: `com.bnovative.mind_mix`, iOS bundle: `com.bnovative.mindMix`). iOS `Info.plist` içinde `ITSAppUsesNonExemptEncryption=false` zaten ekli.
 
-## Dil ve müzik
-- Oyun **İngilizce** açılır. Ana menüde sağ üstten EN / TR seçilir, tercih saklanır.
-- Müzik ve ses efektleri `tools/generate_audio.py` ile sıfırdan sentezlenmiş özgün seslerdir, telif / lisans sorunu yoktur. Yeniden üretmek için: `python tools/generate_audio.py` (numpy + scipy).
-- Müzik "Play" tuşuyla başlar (tarayıcılar ses için dokunuş ister). Müzik tuşu hem müziği hem efektleri kapatır.
-
-## Testler
-```bash
-flutter test
-```
+## Yeni oyun eklemek
+1. `lib/games/<oyun_adi>/<oyun_adi>_screen.dart` oluştur (ortak parçalar için `lib/core/game_shell.dart`: `GameHud`, `GameOverPanel`, `PillButton`).
+2. Skoru `ScoreStore.record('<oyun_adi>', skor)` ile kaydet.
+3. `lib/games/registry.dart` içindeki listeye bir `MiniGame(...)` satırı ekle.
 
 ## Dosya yapısı
 ```
-lib/main.dart                     uygulama girişi
-lib/theme.dart                    renkler ve tema
-lib/l10n/app_strings.dart         EN / TR metinler
-lib/settings/app_settings.dart    dil + müzik ayarı (kayıtlı)
-lib/audio/audio_service.dart      müzik ve ses efektleri
-lib/game/color_utils.dart         sRGB <-> CIELAB, ΔE
-lib/game/difficulty.dart          seviye -> kart sayısı + ΔE
-lib/game/choice_builder.dart      hedef renk ve yakın tuzak kartlar
-lib/game/game_controller.dart     oyun akışı, can, skor, en yüksek skor
-lib/screens/home_screen.dart      ana menü
-lib/screens/game_screen.dart      gösterim / seçim / oyun sonu ekranları
-lib/widgets/hud.dart              üst bar
-assets/logo/                      logo (SVG + PNG) ve uygulama ikonu
-assets/audio/                     müzik ve ses efektleri (WAV)
-tools/generate_audio.py           sesleri üreten betik
-push.bat                          GitHub'a gönderir
+lib/main.dart                       uygulama girişi
+lib/home/home_screen.dart           oyun kartları (ana menü)
+lib/core/theme.dart                 renkler ve tema
+lib/core/l10n.dart                  EN / TR ortak metinler (oyunlarda t.p('en','tr'))
+lib/core/app_settings.dart          dil + müzik ayarı (kayıtlı)
+lib/core/audio_service.dart         müzik ve ses efektleri
+lib/core/sfx.dart                   ses açıksa efekt çal
+lib/core/score_store.dart           oyun başına en yüksek skor
+lib/core/mini_game.dart             oyun tanımı
+lib/core/game_shell.dart            ortak HUD, düğme, oyun sonu paneli
+lib/games/registry.dart             oyun listesi
+lib/games/<oyun>/                   her oyun kendi klasöründe
+test/color_match_test.dart          Color Match zorluk ve kart üretimi testleri
 ```
 
-## Web (GitHub Pages)
-`main` dalına her push'ta `.github/workflows/deploy.yml` oyunu otomatik derleyip yayınlar.
-Tek seferlik ayar: GitHub'da **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-Yayın adresi: `https://<kullanıcı>.github.io/<repo-adı>/`
-
-Yerelde denemek için:
-```bash
-flutter build web --release --base-href "/color-match-game/"
-```
+## Not
+- Uygulama ikonu ve `ios/.../AppIcon` şimdilik Color Match ikonudur. Yeni bir `assets/logo/icon.png` + `icon_foreground.png` koyup `dart run flutter_launcher_icons` çalıştır.
+- Müzik/efektler `tools/generate_audio.py` ile üretilmiş özgün seslerdir.

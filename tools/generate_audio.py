@@ -1,4 +1,4 @@
-"""Color Match için özgün müzik ve ses efektlerini sıfırdan üretir.
+"""Mind Mix için özgün müzik ve ses efektlerini sıfırdan üretir.
 
 Tüm sesler bu betikte matematiksel olarak sentezlenir; hiçbir sample, kayıt ya da
 üçüncü taraf eser kullanılmaz. Bu yüzden telif / lisans sorunu yoktur.

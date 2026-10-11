@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:color_match_game/game/choice_builder.dart';
-import 'package:color_match_game/game/color_utils.dart';
-import 'package:color_match_game/game/difficulty.dart';
+import 'package:mind_mix/games/color_match/choice_builder.dart';
+import 'package:mind_mix/games/color_match/color_utils.dart';
+import 'package:mind_mix/games/color_match/difficulty.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

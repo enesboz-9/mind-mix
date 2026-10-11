@@ -2,39 +2,23 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../game/color_utils.dart';
-import '../game/game_controller.dart';
-import '../settings/app_settings.dart';
-import '../theme.dart';
-import '../widgets/hud.dart';
+import '../../core/app_settings.dart';
+import '../../core/game_shell.dart';
+import '../../core/theme.dart';
+import 'color_match_controller.dart';
+import 'color_utils.dart';
 
 const double _lumaThreshold = 0.179;
 
-Widget _buildHud(BuildContext context, GameController game, Color color, VoidCallback onClose) {
-  final settings = SettingsScope.of(context);
-  final t = settings.t;
-  return Hud(
-    level: game.level,
-    lives: game.lives,
-    score: game.score,
-    color: color,
-    onClose: onClose,
-    closeTooltip: t.exit,
-    levelLabel: t.level(game.level),
-    musicOn: settings.musicOn,
-    onToggleMusic: () => settings.setMusic(!settings.musicOn),
-  );
-}
-
-class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+class ColorMatchScreen extends StatefulWidget {
+  const ColorMatchScreen({super.key});
 
   @override
-  State<GameScreen> createState() => _GameScreenState();
+  State<ColorMatchScreen> createState() => _ColorMatchScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
-  final GameController _game = GameController();
+class _ColorMatchScreenState extends State<ColorMatchScreen> {
+  final ColorMatchController _game = ColorMatchController();
 
   @override
   void initState() {
@@ -79,12 +63,24 @@ class _GameScreenState extends State<GameScreen> {
   }
 }
 
+Widget _hud(BuildContext context, ColorMatchController g, Color color, VoidCallback onClose) {
+  final t = SettingsScope.of(context).t;
+  return GameHud(
+    label: t.level(g.level),
+    lives: g.lives,
+    maxLives: ColorMatchController.startLives,
+    score: g.score,
+    color: color,
+    onClose: onClose,
+  );
+}
+
 // ───────────────────────── Renk gösterimi ─────────────────────────
 
 class _ShowView extends StatelessWidget {
   const _ShowView({required this.game, required this.onClose});
 
-  final GameController game;
+  final ColorMatchController game;
   final VoidCallback onClose;
 
   @override
@@ -97,14 +93,14 @@ class _ShowView extends StatelessWidget {
 
     return Column(
       children: [
-        _buildHud(context, game, fg, onClose),
+        _hud(context, game, fg, onClose),
         Expanded(
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  t.rememberColor,
+                  t.p('Remember this color', 'Bu rengi aklında tut'),
                   style: TextStyle(color: fg, fontSize: 20, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 28),
@@ -118,7 +114,7 @@ class _ShowView extends StatelessWidget {
                         width: 120,
                         height: 120,
                         child: CircularProgressIndicator(
-                          value: game.remainingMs / (GameController.viewSeconds * 1000),
+                          value: game.remainingMs / (ColorMatchController.viewSeconds * 1000),
                           strokeWidth: 6,
                           color: fg,
                           backgroundColor: fg.withAlpha(50),
@@ -133,7 +129,7 @@ class _ShowView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  t.skipBonus(bonus),
+                  t.p('Skip when ready: +$bonus bonus', 'Hazırsan geç: +$bonus bonus'),
                   style: TextStyle(color: fg.withAlpha(200), fontSize: 14),
                 ),
               ],
@@ -142,21 +138,13 @@ class _ShowView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
-          child: SizedBox(
+          child: PillButton(
+            label: t.p('Ready', 'Hazırım'),
+            onPressed: game.skipView,
+            color: fg,
+            textColor: target.toColor(),
             width: double.infinity,
             height: 58,
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: fg,
-                foregroundColor: target.toColor(),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(29)),
-              ),
-              onPressed: game.skipView,
-              child: Text(
-                t.ready,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-              ),
-            ),
           ),
         ),
       ],
@@ -169,7 +157,7 @@ class _ShowView extends StatelessWidget {
 class _ChooseView extends StatelessWidget {
   const _ChooseView({required this.game, required this.onClose});
 
-  final GameController game;
+  final ColorMatchController game;
   final VoidCallback onClose;
 
   @override
@@ -180,18 +168,20 @@ class _ChooseView extends StatelessWidget {
     String headline;
     Color headlineColor = Colors.white;
     if (!revealing) {
-      headline = t.whichOne;
+      headline = t.p('Which one was it?', 'Hangisiydi?');
     } else if (game.lastCorrect) {
-      headline = t.correct(game.lastGain);
+      headline = t.p('Correct!  +${game.lastGain}', 'Doğru!  +${game.lastGain}');
       headlineColor = AppColors.good;
     } else {
-      headline = t.wrong;
+      headline = t.p('Wrong! The right card is marked', 'Yanlış! Doğru kart işaretlendi');
       headlineColor = AppColors.bad;
     }
 
+    final n = game.round.cards.length;
+
     return Column(
       children: [
-        _buildHud(context, game, Colors.white, onClose),
+        _hud(context, game, Colors.white, onClose),
         Padding(
           padding: const EdgeInsets.only(top: 12, bottom: 4),
           child: Text(
@@ -200,7 +190,7 @@ class _ChooseView extends StatelessWidget {
           ),
         ),
         Text(
-          t.cards(game.difficulty.cardCount),
+          t.p('$n cards', '$n kart'),
           style: const TextStyle(color: AppColors.textDim, fontSize: 13),
         ),
         Expanded(
@@ -208,7 +198,6 @@ class _ChooseView extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final n = game.round.cards.length;
                 final cols = n <= 6 ? 2 : 3;
                 final rows = (n / cols).ceil();
                 const gap = 14.0;
@@ -309,77 +298,19 @@ class _CardTile extends StatelessWidget {
 class _OverView extends StatelessWidget {
   const _OverView({required this.game, required this.onClose});
 
-  final GameController game;
+  final ColorMatchController game;
   final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
     final t = SettingsScope.of(context).t;
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              t.gameOver,
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              '${game.score}',
-              style: const TextStyle(
-                fontSize: 72,
-                fontWeight: FontWeight.w900,
-                color: AppColors.accent,
-              ),
-            ),
-            Text(t.points, style: TextStyle(color: AppColors.textDim, fontSize: 16)),
-            const SizedBox(height: 16),
-            Text(
-              t.levelReached(game.level),
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            if (game.isNewBest)
-              Text(
-                t.newRecord,
-                style: TextStyle(
-                  color: AppColors.good,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                ),
-              )
-            else
-              Text(
-                t.bestScore(game.bestScore),
-                style: const TextStyle(color: AppColors.textDim, fontSize: 16),
-              ),
-            const SizedBox(height: 40),
-            SizedBox(
-              width: 240,
-              height: 56,
-              child: FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-                ),
-                onPressed: game.start,
-                child: Text(
-                  t.playAgain,
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: onClose,
-              child: Text(t.mainMenu, style: const TextStyle(fontSize: 16)),
-            ),
-          ],
-        ),
-      ),
+    return GameOverPanel(
+      score: game.score,
+      best: game.bestScore,
+      isNewBest: game.isNewBest,
+      extra: t.p('Level reached: ${game.level}', 'Ulaşılan seviye: ${game.level}'),
+      onAgain: game.start,
+      onMenu: onClose,
     );
   }
 }
