@@ -9,8 +9,8 @@ class AppStrings {
 
   String get appName => 'Mind Mix';
   String get tagline => p(
-        'Six quick brain games.\nPick one and beat your best.',
-        'Altı hızlı zeka oyunu.\nBirini seç, rekorunu kır.',
+        'Quick brain games.\nPick one and beat your best.',
+        'Hızlı zeka oyunları.\nBirini seç, rekorunu kır.',
       );
   String get musicTooltip => p('Music', 'Müzik');
   String get exit => p('Exit', 'Çık');
