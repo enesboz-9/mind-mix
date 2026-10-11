@@ -1,6 +1,6 @@
 # Surprise Games
 
-Tek uygulamada 37 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
+Tek uygulamada 57 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
 
 **Sürpriz düğmesi:** Ana ekrandaki "Sürpriz yap!" düğmesi rastgele bir oyun açar. Oyun içindeki üst barda (zar simgesi) ve oyun sonu panelinde de aynı düğme vardır; oyundan çıkmadan başka rastgele oyuna geçebilirsin.
 
@@ -19,6 +19,26 @@ Oyunlar: Color Match, Odd One Out, Sequence Echo, Math Rush, Lights Out, Tap Rus
 | N-Back | Şekil 1 (sonra 2) önceki ile aynı mı? |
 | Emoji Hunt | Izgarada farklı emojiyi bul (30 sn) |
 | Tap Storm | 10 saniyede olabildiğince çok dokun |
+| Make Ten | Toplamı 10 olan iki sayıyı bul (40 sn) |
+| Paddle Bounce | Raketle topu sektir (3 can) |
+| Lane Runner | 3 şeritte engellerden kaç |
+| Odd or Even | Tek mi çift mi? Ters gün kuralına dikkat |
+| Reverse Echo | Yanan sırayı tersten tekrar et |
+| Rock Paper Reflex | Rakibi yen ya da kaybet, hızlı karar ver |
+| Word Scramble | Karışık harflerden kelimeyi bul (TR/EN, 60 sn) |
+| Tower of Hanoi | Kuleyi sınırlı hamlede sağ çubuğa taşı |
+| Shell Game | Bardakları takip et, topu bul |
+| Mini Sudoku | 4x4 sudoku, bölüm bölüm zorlaşır |
+| Mine Sweep | 6x6 mayın tarlası, her tahtada mayın artar |
+| Tube Sort | Renkleri tüplere ayır (geri al / yenile var) |
+| Maze Dash | Süreye karşı labirentten kaydırarak çık |
+| Spot the Change | Izgarayı ezberle, değişen kareyi bul (3 can) |
+| Color Mixer | R/G/B ile hedef rengi yakala (5 tur) |
+| Brick Breaker | Raketle topu sektir, tuğlaları kır (3 can) |
+| Mirror Match | Döndürülmüş şekli bul, aynadakini değil (3 can) |
+| Orbit Tap | Nokta yeşil bölgedeyken dokun (3 can) |
+| Wire Cut | Kurala göre doğru teli kes (40 sn, 3 can) |
+| Category Rush | Emojiyi doğru kategoriye at (40 sn, 3 can) |
 
 ## Kurulum
 ```bash

@@ -2,6 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../core/mini_game.dart';
 import 'arrow_rule/arrow_rule_screen.dart';
+import 'mine_sweep/mine_sweep_screen.dart';
+import 'tube_sort/tube_sort_screen.dart';
+import 'maze_dash/maze_dash_screen.dart';
+import 'spot_change/spot_change_screen.dart';
+import 'color_mixer/color_mixer_screen.dart';
+import 'brick_breaker/brick_breaker_screen.dart';
+import 'mirror_match/mirror_match_screen.dart';
+import 'orbit_tap/orbit_tap_screen.dart';
+import 'wire_cut/wire_cut_screen.dart';
+import 'category_rush/category_rush_screen.dart';
+import 'rps_speed/rps_speed_screen.dart';
+import 'word_scramble/word_scramble_screen.dart';
+import 'hanoi/hanoi_screen.dart';
+import 'shell_game/shell_game_screen.dart';
+import 'mini_sudoku/mini_sudoku_screen.dart';
+import 'sum_ten/sum_ten_screen.dart';
+import 'paddle_bounce/paddle_bounce_screen.dart';
+import 'lane_runner/lane_runner_screen.dart';
+import 'odd_even/odd_even_screen.dart';
+import 'reverse_echo/reverse_echo_screen.dart';
 import 'balloon_pop/balloon_pop_screen.dart';
 import 'catch_fall/catch_fall_screen.dart';
 import 'stack_tower/stack_tower_screen.dart';
@@ -410,5 +430,205 @@ final List<MiniGame> allGames = [
     icon: Icons.touch_app_rounded,
     color: const Color(0xFFFB7185),
     builder: () => const TapStormScreen(),
+  ),
+  MiniGame(
+    id: 'sum_ten',
+    nameEn: 'Make Ten',
+    nameTr: 'Toplam On',
+    descEn: 'Tap two numbers that add up to 10.',
+    descTr: 'Toplamı 10 olan iki sayıya dokun.',
+    icon: Icons.add_circle_rounded,
+    color: const Color(0xFF34D399),
+    builder: () => const SumTenScreen(),
+  ),
+  MiniGame(
+    id: 'paddle_bounce',
+    nameEn: 'Paddle Bounce',
+    nameTr: 'Raket Sektir',
+    descEn: 'Keep the ball in play with your paddle.',
+    descTr: 'Raketle topu düşürmeden sektir.',
+    icon: Icons.sports_tennis_rounded,
+    color: const Color(0xFF60A5FA),
+    builder: () => const PaddleBounceScreen(),
+  ),
+  MiniGame(
+    id: 'lane_runner',
+    nameEn: 'Lane Runner',
+    nameTr: 'Şerit Koşusu',
+    descEn: 'Switch lanes to dodge the blocks.',
+    descTr: 'Şerit değiştir, engellere çarpma.',
+    icon: Icons.swap_horiz_rounded,
+    color: const Color(0xFFFBBF24),
+    builder: () => const LaneRunnerScreen(),
+  ),
+  MiniGame(
+    id: 'odd_even',
+    nameEn: 'Odd or Even',
+    nameTr: 'Tek mi Çift mi',
+    descEn: 'Odd or even? Watch out for opposite day!',
+    descTr: 'Tek mi çift mi? Ters güne dikkat!',
+    icon: Icons.exposure_rounded,
+    color: const Color(0xFFC084FC),
+    builder: () => const OddEvenScreen(),
+  ),
+  MiniGame(
+    id: 'reverse_echo',
+    nameEn: 'Reverse Echo',
+    nameTr: 'Ters Sıra',
+    descEn: 'Watch the pattern, repeat it backwards.',
+    descTr: 'Sırayı izle, tersten tekrar et.',
+    icon: Icons.undo_rounded,
+    color: const Color(0xFFF472B6),
+    builder: () => const ReverseEchoScreen(),
+  ),
+  MiniGame(
+    id: 'rps_speed',
+    nameEn: 'Rock Paper Reflex',
+    nameTr: 'Taş Kâğıt Refleks',
+    descEn: 'Beat it — or lose to it — fast!',
+    descTr: 'Yen ya da kaybet, ama hızlı!',
+    icon: Icons.pan_tool_rounded,
+    color: const Color(0xFFFB923C),
+    builder: () => const RpsSpeedScreen(),
+  ),
+  MiniGame(
+    id: 'word_scramble',
+    nameEn: 'Word Scramble',
+    nameTr: 'Kelime Avı',
+    descEn: 'Unscramble the letters into a word.',
+    descTr: 'Karışık harflerden kelimeyi bul.',
+    icon: Icons.spellcheck_rounded,
+    color: const Color(0xFF22D3EE),
+    builder: () => const WordScrambleScreen(),
+  ),
+  MiniGame(
+    id: 'hanoi',
+    nameEn: 'Tower of Hanoi',
+    nameTr: 'Hanoi Kuleleri',
+    descEn: 'Move the whole tower in limited moves.',
+    descTr: 'Kuleyi sınırlı hamlede taşı.',
+    icon: Icons.align_vertical_bottom_rounded,
+    color: const Color(0xFFA3E635),
+    builder: () => const HanoiScreen(),
+  ),
+  MiniGame(
+    id: 'shell_game',
+    nameEn: 'Shell Game',
+    nameTr: 'Bardak Oyunu',
+    descEn: 'Follow the ball under the cups.',
+    descTr: 'Topun hangi bardakta olduğunu takip et.',
+    icon: Icons.sports_bar_rounded,
+    color: const Color(0xFFE879F9),
+    builder: () => const ShellGameScreen(),
+  ),
+  MiniGame(
+    id: 'mini_sudoku',
+    nameEn: 'Mini Sudoku',
+    nameTr: 'Mini Sudoku',
+    descEn: 'Fill the 4x4 grid with 1-4.',
+    descTr: '4x4 tabloyu 1-4 ile doldur.',
+    icon: Icons.grid_4x4_rounded,
+    color: const Color(0xFF818CF8),
+    builder: () => const MiniSudokuScreen(),
+  ),
+  MiniGame(
+    id: 'mine_sweep',
+    nameEn: 'Mine Sweep',
+    nameTr: 'Mayın Tarlası',
+    descEn: 'Open every safe square, avoid the mines.',
+    descTr: 'Güvenli kareleri aç, mayınlardan kaç.',
+    icon: Icons.flag_rounded,
+    color: const Color(0xFFF97316),
+    builder: () => const MineSweepScreen(),
+  ),
+  MiniGame(
+    id: 'tube_sort',
+    nameEn: 'Tube Sort',
+    nameTr: 'Tüp Ayır',
+    descEn: 'Pour the colors until every tube is one color.',
+    descTr: 'Her tüp tek renk olana kadar aktar.',
+    icon: Icons.science_rounded,
+    color: const Color(0xFF14B8A6),
+    builder: () => const TubeSortScreen(),
+  ),
+  MiniGame(
+    id: 'maze_dash',
+    nameEn: 'Maze Dash',
+    nameTr: 'Labirent Koşusu',
+    descEn: 'Swipe through the maze against the clock.',
+    descTr: 'Süreye karşı labirentten kaydırarak çık.',
+    icon: Icons.alt_route_rounded,
+    color: const Color(0xFF84CC16),
+    builder: () => const MazeDashScreen(),
+  ),
+  MiniGame(
+    id: 'spot_change',
+    nameEn: 'Spot the Change',
+    nameTr: 'Değişeni Bul',
+    descEn: 'Memorize the grid, find what changed.',
+    descTr: 'Izgarayı ezberle, neyin değiştiğini bul.',
+    icon: Icons.visibility_rounded,
+    color: const Color(0xFF38BDF8),
+    builder: () => const SpotChangeScreen(),
+  ),
+  MiniGame(
+    id: 'color_mixer',
+    nameEn: 'Color Mixer',
+    nameTr: 'Renk Karıştır',
+    descEn: 'Mix RGB to match the target color.',
+    descTr: 'RGB karıştırıp hedef rengi yakala.',
+    icon: Icons.tune_rounded,
+    color: const Color(0xFFF472B6),
+    builder: () => const ColorMixerScreen(),
+  ),
+  MiniGame(
+    id: 'brick_breaker',
+    nameEn: 'Brick Breaker',
+    nameTr: 'Tuğla Kırıcı',
+    descEn: 'Bounce the ball and smash every brick.',
+    descTr: 'Topu sektir, tüm tuğlaları kır.',
+    icon: Icons.grid_on_rounded,
+    color: const Color(0xFFEF4444),
+    builder: () => const BrickBreakerScreen(),
+  ),
+  MiniGame(
+    id: 'mirror_match',
+    nameEn: 'Mirror Match',
+    nameTr: 'Ayna Eşle',
+    descEn: 'Find the rotated shape, not the mirror image.',
+    descTr: 'Döndürülmüş şekli bul, aynadakini değil.',
+    icon: Icons.flip_rounded,
+    color: const Color(0xFFE879F9),
+    builder: () => const MirrorMatchScreen(),
+  ),
+  MiniGame(
+    id: 'orbit_tap',
+    nameEn: 'Orbit Tap',
+    nameTr: 'Yörünge',
+    descEn: 'Tap when the dot hits the green zone.',
+    descTr: 'Nokta yeşil bölgedeyken dokun.',
+    icon: Icons.track_changes_rounded,
+    color: const Color(0xFF2DD4BF),
+    builder: () => const OrbitTapScreen(),
+  ),
+  MiniGame(
+    id: 'wire_cut',
+    nameEn: 'Wire Cut',
+    nameTr: 'Tel Kes',
+    descEn: 'Defuse the bomb: cut the right wire.',
+    descTr: 'Bombayı etkisizleştir: doğru teli kes.',
+    icon: Icons.content_cut_rounded,
+    color: const Color(0xFFFACC15),
+    builder: () => const WireCutScreen(),
+  ),
+  MiniGame(
+    id: 'category_rush',
+    nameEn: 'Category Rush',
+    nameTr: 'Kategori Hızı',
+    descEn: 'Sort each emoji into its category, fast.',
+    descTr: 'Emojiyi hızla doğru kategoriye at.',
+    icon: Icons.category_rounded,
+    color: const Color(0xFF60A5FA),
+    builder: () => const CategoryRushScreen(),
   ),
 ];
