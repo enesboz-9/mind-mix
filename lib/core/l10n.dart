@@ -7,11 +7,14 @@ class AppStrings {
 
   String p(String en, String tr) => isTr ? tr : en;
 
-  String get appName => 'Mind Mix';
+  String get appName => 'Surprise Games';
   String get tagline => p(
-        'Quick brain games.\nPick one and beat your best.',
-        'Hızlı zeka oyunları.\nBirini seç, rekorunu kır.',
+        'Quick brain games.\nPick one — or let fate pick for you.',
+        'Hızlı zeka oyunları.\nBirini seç — ya da şansa bırak.',
       );
+  String get surpriseMe => p('Surprise me!', 'Sürpriz yap!');
+  String get randomGame => p('Random game', 'Rastgele oyun');
+  String gamesCount(int n) => p('$n games', '$n oyun');
   String get musicTooltip => p('Music', 'Müzik');
   String get exit => p('Exit', 'Çık');
   String get best => p('Best', 'En iyi');

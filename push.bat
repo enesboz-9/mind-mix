@@ -40,7 +40,7 @@ git config core.safecrlf false
 git add -A
 git status --short
 
-set MSG=Mind Mix: guncelleme
+set MSG=Surprise Games: guncelleme
 if not "%~1"=="" set MSG=%*
 
 git commit -m "%MSG%"

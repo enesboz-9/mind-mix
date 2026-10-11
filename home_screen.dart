@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../core/app_settings.dart';
 import '../core/audio_service.dart';
 import '../core/mini_game.dart';
+import '../core/random_game.dart';
 import '../core/score_store.dart';
 import '../core/theme.dart';
 import '../games/registry.dart';
@@ -38,7 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _openRandom() {
+    final game = RandomGame.pick();
+    if (game != null) _open(game);
+  }
+
   Future<void> _open(MiniGame game) async {
+    RandomGame.lastId = game.id;
     // Tarayıcılar ses için kullanıcı dokunuşu ister; müziği burada başlatıyoruz.
     if (AppSettings.instance.musicOn) AudioService.instance.playMusic();
     await Navigator.of(context).push(
@@ -121,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               colors: [Color(0xFFFFB3C1), Color(0xFFFF5E7E), Color(0xFFA472EE)],
                             ).createShader(rect),
                             child: const Text(
-                              'Mind Mix',
+                              'Surprise Games',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 38,
@@ -140,6 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 15,
                               height: 1.4,
                             ),
+                          ),
+                          const SizedBox(height: 18),
+                          _SurpriseButton(
+                            label: t.surpriseMe,
+                            hint: t.gamesCount(allGames.length),
+                            onTap: _openRandom,
                           ),
                         ],
                       ),
@@ -180,6 +193,63 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+/// Rastgele oyun açan büyük "sürpriz" düğmesi.
+class _SurpriseButton extends StatelessWidget {
+  const _SurpriseButton({
+    required this.label,
+    required this.hint,
+    required this.onTap,
+  });
+
+  final String label;
+  final String hint;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(30);
+    return Material(
+      color: Colors.transparent,
+      borderRadius: radius,
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF5E7E), Color(0xFFA472EE)],
+          ),
+        ),
+        child: InkWell(
+          borderRadius: radius,
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.casino_rounded, color: Colors.white, size: 26),
+                const SizedBox(width: 10),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  hint,
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Kartların sırayla yukarı kayarak belirmesi.
 class _Entrance extends StatelessWidget {
   const _Entrance({required this.index, required this.child});
@@ -191,7 +261,7 @@ class _Entrance extends StatelessWidget {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
-      duration: Duration(milliseconds: 350 + index * 70),
+      duration: Duration(milliseconds: 350 + math.min(index, 8) * 70),
       curve: Curves.easeOutCubic,
       builder: (context, v, child) => Opacity(
         opacity: v,

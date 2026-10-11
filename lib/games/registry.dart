@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../core/mini_game.dart';
 import 'arrow_rule/arrow_rule_screen.dart';
+import 'balloon_pop/balloon_pop_screen.dart';
+import 'catch_fall/catch_fall_screen.dart';
+import 'stack_tower/stack_tower_screen.dart';
+import 'flap_dot/flap_dot_screen.dart';
+import 'dodge_rush/dodge_rush_screen.dart';
+import 'snake/snake_screen.dart';
+import 'merge_2048/merge_2048_screen.dart';
+import 'true_false/true_false_screen.dart';
+import 'back_memory/back_memory_screen.dart';
+import 'emoji_hunt/emoji_hunt_screen.dart';
+import 'tap_storm/tap_storm_screen.dart';
 import 'chimp_test/chimp_test_screen.dart';
 import 'clock_read/clock_read_screen.dart';
 import 'color_match/color_match_screen.dart';
@@ -289,5 +300,115 @@ final List<MiniGame> allGames = [
     icon: Icons.schedule_rounded,
     color: const Color(0xFF7DD3FC),
     builder: () => const ClockReadScreen(),
+  ),
+  MiniGame(
+    id: 'balloon_pop',
+    nameEn: 'Balloon Pop',
+    nameTr: 'Balon Patlat',
+    descEn: 'Pop the rising balloons before they escape.',
+    descTr: 'Yükselen balonları kaçmadan patlat.',
+    icon: Icons.bubble_chart_rounded,
+    color: const Color(0xFF4D9DFF),
+    builder: () => const BalloonPopScreen(),
+  ),
+  MiniGame(
+    id: 'catch_fall',
+    nameEn: 'Catch It',
+    nameTr: 'Yakala',
+    descEn: 'Catch the fruit, dodge the bombs.',
+    descTr: 'Meyveleri yakala, bombalardan kaç.',
+    icon: Icons.shopping_basket_rounded,
+    color: const Color(0xFFFF9F43),
+    builder: () => const CatchFallScreen(),
+  ),
+  MiniGame(
+    id: 'stack_tower',
+    nameEn: 'Stack Up',
+    nameTr: 'Kule Yap',
+    descEn: 'Drop blocks at the perfect moment.',
+    descTr: 'Blokları tam zamanında bırak.',
+    icon: Icons.layers_rounded,
+    color: const Color(0xFFA472EE),
+    builder: () => const StackTowerScreen(),
+  ),
+  MiniGame(
+    id: 'flap_dot',
+    nameEn: 'Flap Dot',
+    nameTr: 'Zıpla Nokta',
+    descEn: 'Tap to flap through the gates.',
+    descTr: 'Dokun, kapıların arasından geç.',
+    icon: Icons.air_rounded,
+    color: const Color(0xFF3DDC84),
+    builder: () => const FlapDotScreen(),
+  ),
+  MiniGame(
+    id: 'dodge_rush',
+    nameEn: 'Dodge Rush',
+    nameTr: 'Kaç Kurtul',
+    descEn: 'Drag and dodge the falling blocks.',
+    descTr: 'Sürükle, düşen bloklardan kaç.',
+    icon: Icons.directions_run_rounded,
+    color: const Color(0xFFFFC94D),
+    builder: () => const DodgeRushScreen(),
+  ),
+  MiniGame(
+    id: 'snake',
+    nameEn: 'Snake',
+    nameTr: 'Yılan',
+    descEn: 'Swipe to eat and grow. Don\'t crash!',
+    descTr: 'Kaydır, ye ve büyü. Çarpma!',
+    icon: Icons.timeline_rounded,
+    color: const Color(0xFF6EE7B7),
+    builder: () => const SnakeScreen(),
+  ),
+  MiniGame(
+    id: 'merge_2048',
+    nameEn: '2048',
+    nameTr: '2048',
+    descEn: 'Swipe and merge matching numbers.',
+    descTr: 'Kaydır, aynı sayıları birleştir.',
+    icon: Icons.apps_rounded,
+    color: const Color(0xFFFF5E7E),
+    builder: () => const Merge2048Screen(),
+  ),
+  MiniGame(
+    id: 'true_false',
+    nameEn: 'True or False',
+    nameTr: 'Doğru mu Yanlış mı',
+    descEn: 'Is the equation right? Decide fast.',
+    descTr: 'Eşitlik doğru mu? Hızlı karar ver.',
+    icon: Icons.rule_rounded,
+    color: const Color(0xFF7DD3FC),
+    builder: () => const TrueFalseScreen(),
+  ),
+  MiniGame(
+    id: 'back_memory',
+    nameEn: 'N-Back',
+    nameTr: 'N-Geri',
+    descEn: 'Same as the one before? Train your memory.',
+    descTr: 'Bir öncekiyle aynı mı? Hafızanı çalıştır.',
+    icon: Icons.replay_rounded,
+    color: const Color(0xFFF9A8D4),
+    builder: () => const BackMemoryScreen(),
+  ),
+  MiniGame(
+    id: 'emoji_hunt',
+    nameEn: 'Emoji Hunt',
+    nameTr: 'Emoji Avı',
+    descEn: 'Find the one emoji that is different.',
+    descTr: 'Farklı olan tek emojiyi bul.',
+    icon: Icons.emoji_emotions_rounded,
+    color: const Color(0xFFFCD34D),
+    builder: () => const EmojiHuntScreen(),
+  ),
+  MiniGame(
+    id: 'tap_storm',
+    nameEn: 'Tap Storm',
+    nameTr: 'Dokunuş Fırtınası',
+    descEn: 'Tap as fast as you can for 10 seconds.',
+    descTr: '10 saniyede olabildiğince hızlı dokun.',
+    icon: Icons.touch_app_rounded,
+    color: const Color(0xFFFB7185),
+    builder: () => const TapStormScreen(),
   ),
 ];

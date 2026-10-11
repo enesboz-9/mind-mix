@@ -3,13 +3,16 @@ import 'package:flutter/services.dart';
 
 import 'core/app_settings.dart';
 import 'core/audio_service.dart';
+import 'core/random_game.dart';
 import 'core/theme.dart';
+import 'games/registry.dart';
 import 'home/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(const [DeviceOrientation.portraitUp]);
   await AppSettings.instance.load();
+  RandomGame.pool = allGames;
   runApp(const MindMixApp());
 }
 

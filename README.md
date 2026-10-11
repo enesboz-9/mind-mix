@@ -1,15 +1,24 @@
-# Mind Mix
+# Surprise Games
 
-Tek uygulamada 6 hızlı zeka oyunu. Çevrimdışı, hesapsız, reklamsız.
+Tek uygulamada 37 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
 
-| Oyun | Kısaca |
+**Sürpriz düğmesi:** Ana ekrandaki "Sürpriz yap!" düğmesi rastgele bir oyun açar. Oyun içindeki üst barda (zar simgesi) ve oyun sonu panelinde de aynı düğme vardır; oyundan çıkmadan başka rastgele oyuna geçebilirsin.
+
+Oyunlar: Color Match, Odd One Out, Sequence Echo, Math Rush, Lights Out, Tap Rush, Letter Hunt, Number Order, Arrow Rule, Mole Hunt, Chimp Test, Color Words, Pattern Finder, Target Sum, Dot Count, Number Memory, Shape Sort, Read the Clock, Quick Compare, Time Stop, Slide Puzzle, Grid Memory, Reflex, Higher or Lower, Timing Bar, Flip Pairs ve yeni eklenenler:
+
+| Yeni oyun | Kısaca |
 |---|---|
-| Color Match | Rengi aklında tut, çok benzeyen kartlar arasından aynısını bul (3 can, sonsuz) |
-| Odd One Out | Izgarada biraz farklı tonu bul (30 sn, yanlış = -3 sn) |
-| Sequence Echo | Yanan sırayı izle, tekrar et (yanlış = oyun biter) |
-| Math Rush | Hızlı işlemler (45 sn, 3 can) |
-| Lights Out | Işıkları söndür, bölümler gittikçe büyür (hepsi çözülebilir) |
-| Tap Rush | Beliren daireye süresi dolmadan dokun (3 can, hızlanır) |
+| Balloon Pop | Yükselen balonları kaçmadan patlat (3 can) |
+| Catch It | Sepetle meyve yakala, bombalardan kaç (3 can) |
+| Stack Up | Kayan bloğu tam zamanında bırak, kuleyi yükselt |
+| Flap Dot | Dokun, borular arasından geç |
+| Dodge Rush | Noktayı sürükle, düşen bloklardan kaç |
+| Snake | Klasik yılan (kaydır / ok tuşları) |
+| 2048 | Kaydır, aynı sayıları birleştir |
+| True or False | Eşitlik doğru mu? (40 sn, 3 can) |
+| N-Back | Şekil 1 (sonra 2) önceki ile aynı mı? |
+| Emoji Hunt | Izgarada farklı emojiyi bul (30 sn) |
+| Tap Storm | 10 saniyede olabildiğince çok dokun |
 
 ## Kurulum
 ```bash
@@ -24,7 +33,7 @@ flutter run
 ## Yeni oyun eklemek
 1. `lib/games/<oyun_adi>/<oyun_adi>_screen.dart` oluştur (ortak parçalar için `lib/core/game_shell.dart`: `GameHud`, `GameOverPanel`, `PillButton`).
 2. Skoru `ScoreStore.record('<oyun_adi>', skor)` ile kaydet.
-3. `lib/games/registry.dart` içindeki listeye bir `MiniGame(...)` satırı ekle.
+3. `lib/games/registry.dart` içindeki listeye bir `MiniGame(...)` satırı ekle. Sürpriz düğmesi listeyi otomatik kullanır.
 
 ## Dosya yapısı
 ```
@@ -37,6 +46,8 @@ lib/core/audio_service.dart         müzik ve ses efektleri
 lib/core/sfx.dart                   ses açıksa efekt çal
 lib/core/score_store.dart           oyun başına en yüksek skor
 lib/core/mini_game.dart             oyun tanımı
+lib/core/random_game.dart           sürpriz (rastgele oyun) mantığı
+lib/core/game_loop.dart             aksiyon oyunları için kare döngüsü
 lib/core/game_shell.dart            ortak HUD, düğme, oyun sonu paneli
 lib/games/registry.dart             oyun listesi
 lib/games/<oyun>/                   her oyun kendi klasöründe

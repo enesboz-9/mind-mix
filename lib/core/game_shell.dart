@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_settings.dart';
+import 'random_game.dart';
 import 'theme.dart';
 
 /// Tüm oyunların üst barı: kapat, başlık, (süre), canlar, müzik ve skor.
@@ -62,6 +63,14 @@ class GameHud extends StatelessWidget {
                   size: 22,
                 ),
               ),
+          IconButton(
+            onPressed: () => RandomGame.replaceWithRandom(context),
+            tooltip: settings.t.randomGame,
+            visualDensity: VisualDensity.compact,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints.tightFor(width: 40, height: 40),
+            icon: Icon(Icons.casino_rounded, color: color, size: 22),
+          ),
           IconButton(
             onPressed: () => settings.setMusic(!settings.musicOn),
             icon: Icon(
@@ -178,6 +187,11 @@ class GameOverPanel extends StatelessWidget {
             const SizedBox(height: 40),
             PillButton(label: t.playAgain, onPressed: onAgain),
             const SizedBox(height: 12),
+            TextButton.icon(
+              onPressed: () => RandomGame.replaceWithRandom(context),
+              icon: const Icon(Icons.casino_rounded),
+              label: Text(t.randomGame, style: const TextStyle(fontSize: 16)),
+            ),
             TextButton(
               onPressed: onMenu,
               child: Text(t.mainMenu, style: const TextStyle(fontSize: 16)),
