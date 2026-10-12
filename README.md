@@ -1,6 +1,6 @@
 # Surprise Games
 
-Tek uygulamada 63 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
+Tek uygulamada 66 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
 
 **Sürpriz düğmesi:** Ana ekrandaki "Sürpriz yap!" düğmesi rastgele bir oyun açar. Oyun içindeki üst barda (zar simgesi) ve oyun sonu panelinde de aynı düğme vardır; oyundan çıkmadan başka rastgele oyuna geçebilirsin.
 
@@ -45,6 +45,9 @@ Oyunlar: Color Match, Odd One Out, Sequence Echo, Math Rush, Lights Out, Tap Rus
 | Binary Bits | Bitleri çevirerek hedef sayıyı yap (45 sn) |
 | Path Memory | Işığın izlediği yolu aynı sırayla tekrar et (3 can) |
 | Missing Letter | Eksik harfi bul (TR/EN, 3 can) |
+| Next Number | Dizinin kuralını bul, sıradaki sayıyı seç (3 can) |
+| Word Recall | Kelimeleri ezberle, karışık listede bul (TR/EN, 3 can) |
+| Hop Rush | Dokun, engellerin üzerinden zıpla (tek can) |
 
 ## Kurulum
 ```bash

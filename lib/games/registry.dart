@@ -58,6 +58,15 @@ import 'tap_rush/tap_rush_screen.dart';
 import 'target_sum/target_sum_screen.dart';
 import 'time_stop/time_stop_screen.dart';
 import 'timing_bar/timing_bar_screen.dart';
+import 'binary_bits/binary_bits_screen.dart';
+import 'color_flood/color_flood_screen.dart';
+import 'gravity_flip/gravity_flip_screen.dart';
+import 'missing_letter/missing_letter_screen.dart';
+import 'path_memory/path_memory_screen.dart';
+import 'star_blaster/star_blaster_screen.dart';
+import 'next_number/next_number_screen.dart';
+import 'word_recall/word_recall_screen.dart';
+import 'hop_rush/hop_rush_screen.dart';
 
 /// Ana menüde görünen oyunlar. Yeni oyun eklemek için buraya bir satır ekle.
 final List<MiniGame> allGames = [
@@ -630,5 +639,95 @@ final List<MiniGame> allGames = [
     icon: Icons.category_rounded,
     color: const Color(0xFF60A5FA),
     builder: () => const CategoryRushScreen(),
+  ),
+  MiniGame(
+    id: 'color_flood',
+    nameEn: 'Color Flood',
+    nameTr: 'Renk Seli',
+    descEn: 'Flood the board with one color in limited moves.',
+    descTr: 'Sınırlı hamlede tahtayı tek renge boya.',
+    icon: Icons.format_color_fill_rounded,
+    color: const Color(0xFF38BDF8),
+    builder: () => const ColorFloodScreen(),
+  ),
+  MiniGame(
+    id: 'star_blaster',
+    nameEn: 'Star Blaster',
+    nameTr: 'Yıldız Avcısı',
+    descEn: 'Drag your ship and blast the asteroids.',
+    descTr: 'Gemini sürükle, asteroitleri vur.',
+    icon: Icons.rocket_launch_rounded,
+    color: const Color(0xFFF97316),
+    builder: () => const StarBlasterScreen(),
+  ),
+  MiniGame(
+    id: 'gravity_flip',
+    nameEn: 'Gravity Flip',
+    nameTr: 'Yerçekimi',
+    descEn: 'Tap to flip gravity and dodge the walls.',
+    descTr: 'Dokun, yerçekimini çevir, engellerden kaç.',
+    icon: Icons.swap_vert_rounded,
+    color: const Color(0xFFC084FC),
+    builder: () => const GravityFlipScreen(),
+  ),
+  MiniGame(
+    id: 'binary_bits',
+    nameEn: 'Binary Bits',
+    nameTr: 'İkilik Bitler',
+    descEn: 'Flip the bits to build the target number.',
+    descTr: 'Bitleri çevirerek hedef sayıyı oluştur.',
+    icon: Icons.memory_rounded,
+    color: const Color(0xFF34D399),
+    builder: () => const BinaryBitsScreen(),
+  ),
+  MiniGame(
+    id: 'path_memory',
+    nameEn: 'Path Memory',
+    nameTr: 'Yol Hafızası',
+    descEn: 'Watch the light travel, retrace its path.',
+    descTr: 'Işığın yolunu izle, aynı yolu tekrar et.',
+    icon: Icons.route_rounded,
+    color: const Color(0xFFFB923C),
+    builder: () => const PathMemoryScreen(),
+  ),
+  MiniGame(
+    id: 'missing_letter',
+    nameEn: 'Missing Letter',
+    nameTr: 'Eksik Harf',
+    descEn: 'Find the missing letter before time runs out.',
+    descTr: 'Süre bitmeden eksik harfi bul.',
+    icon: Icons.spellcheck_rounded,
+    color: const Color(0xFFF43F5E),
+    builder: () => const MissingLetterScreen(),
+  ),
+  MiniGame(
+    id: 'next_number',
+    nameEn: 'Next Number',
+    nameTr: 'Sıradaki Sayı',
+    descEn: 'Spot the rule and pick the next number.',
+    descTr: 'Kuralı bul, sıradaki sayıyı seç.',
+    icon: Icons.pin_rounded,
+    color: const Color(0xFF22D3EE),
+    builder: () => const NextNumberScreen(),
+  ),
+  MiniGame(
+    id: 'word_recall',
+    nameEn: 'Word Recall',
+    nameTr: 'Kelime Hafızası',
+    descEn: 'Memorize the words, then find them in the mix.',
+    descTr: 'Kelimeleri ezberle, karışık listede bul.',
+    icon: Icons.psychology_rounded,
+    color: const Color(0xFFA3E635),
+    builder: () => const WordRecallScreen(),
+  ),
+  MiniGame(
+    id: 'hop_rush',
+    nameEn: 'Hop Rush',
+    nameTr: 'Zıpla Koş',
+    descEn: 'Tap to jump over the blocks. One life.',
+    descTr: 'Dokun, engellerin üzerinden zıpla. Tek can.',
+    icon: Icons.directions_run_rounded,
+    color: const Color(0xFFFACC15),
+    builder: () => const HopRushScreen(),
   ),
 ];

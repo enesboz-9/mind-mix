@@ -1,7 +1,0 @@
-# Satir sonlarini LF'ye sabitle (Windows'ta CRLF uyarilarini onler)
-* text=auto eol=lf
-*.bat text eol=crlf
-*.png binary
-*.wav binary
-*.ico binary
-*.jpg binary
