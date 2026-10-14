@@ -173,8 +173,19 @@ class _ReflexScreenState extends State<ReflexScreen> {
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 150),
                           decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(28),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color.lerp(color, Colors.white, 0.18)!, color],
+                            ),
+                            borderRadius: BorderRadius.circular(32),
+                            boxShadow: [
+                              BoxShadow(
+                                color: color.withAlpha(110),
+                                blurRadius: 36,
+                                spreadRadius: 1,
+                              ),
+                            ],
                           ),
                           child: Center(
                             child: FittedBox(

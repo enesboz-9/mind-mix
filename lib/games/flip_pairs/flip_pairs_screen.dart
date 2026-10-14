@@ -173,31 +173,66 @@ class _FlipPairsScreenState extends State<FlipPairsScreen> {
     final c = _cards[i];
     final show = c.up || c.matched;
     final color = _colors[c.symbol];
+    final front = Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [color.withAlpha(c.matched ? 60 : 110), color.withAlpha(c.matched ? 24 : 44)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color, width: 2),
+        boxShadow: [
+          BoxShadow(color: color.withAlpha(c.matched ? 30 : 80), blurRadius: 14),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          _icons[c.symbol],
+          color: Color.lerp(color, Colors.white, 0.35),
+          size: 34,
+        ),
+      ),
+    );
+    final back = Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.surfaceHi, AppColors.surface],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: _flipColor.withAlpha(90), width: 2),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.help_outline_rounded,
+          color: _flipColor.withAlpha(150),
+          size: 28,
+        ),
+      ),
+    );
     return GestureDetector(
       onTap: () => _tap(i),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          color: show ? color.withAlpha(c.matched ? 36 : 70) : AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: show ? color : _flipColor.withAlpha(70),
-            width: 2,
-          ),
-        ),
-        child: Center(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 200),
-            child: show
-                ? Icon(_icons[c.symbol], key: ValueKey<String>('f$i'), color: color, size: 34)
-                : Icon(
-                    Icons.question_mark_rounded,
-                    key: ValueKey<String>('b$i'),
-                    color: AppColors.textDim,
-                    size: 26,
-                  ),
-          ),
-        ),
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(end: show ? 1.0 : 0.0),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        builder: (context, v, _) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.0012)
+              ..rotateY(v * math.pi),
+            child: v >= 0.5
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()..rotateY(math.pi),
+                    child: front,
+                  )
+                : back,
+          );
+        },
       ),
     );
   }

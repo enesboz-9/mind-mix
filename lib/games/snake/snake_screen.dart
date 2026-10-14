@@ -205,7 +205,7 @@ class _SnakeScreenState extends State<SnakeScreen>
                             child: AspectRatio(
                               aspectRatio: 1,
                               child: CustomPaint(
-                                painter: _SnakePainter(_snake, _food, _n),
+                                painter: _SnakePainter(_snake, _food, _n, _dir),
                               ),
                             ),
                           ),
@@ -221,36 +221,86 @@ class _SnakeScreenState extends State<SnakeScreen>
 }
 
 class _SnakePainter extends CustomPainter {
-  _SnakePainter(this.snake, this.food, this.n);
+  _SnakePainter(this.snake, this.food, this.n, this.dir);
 
   final List<math.Point<int>> snake;
   final math.Point<int> food;
   final int n;
+  final math.Point<int> dir;
 
   @override
   void paint(Canvas canvas, Size size) {
     final cell = size.width / n;
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(16)),
-      Paint()..color = AppColors.surface,
+    final board = RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(18));
+    canvas.save();
+    canvas.clipRRect(board);
+    canvas.drawRect(Offset.zero & size, Paint()..color = const Color(0xFF161926));
+
+    // Dama tahtası zemin
+    final tile = Paint()..color = const Color(0x0AFFFFFF);
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < n; x++) {
+        if ((x + y).isEven) {
+          canvas.drawRect(Rect.fromLTWH(x * cell, y * cell, cell, cell), tile);
+        }
+      }
+    }
+
+    // Yem: parlayan elma
+    final fc = Offset((food.x + 0.5) * cell, (food.y + 0.5) * cell);
+    canvas.drawCircle(
+      fc,
+      cell * 0.95,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [AppColors.accent.withAlpha(120), AppColors.accent.withAlpha(0)],
+        ).createShader(Rect.fromCircle(center: fc, radius: cell * 0.95)),
     );
+    canvas.drawCircle(fc, cell * 0.34, Paint()..color = AppColors.accent);
+    canvas.drawCircle(
+      fc.translate(-cell * 0.1, -cell * 0.11),
+      cell * 0.1,
+      Paint()..color = Colors.white.withAlpha(180),
+    );
+
+    // Gövde: baştan kuyruğa doğru koyulaşan gradyan
+    final last = math.max(1, snake.length - 1);
     for (var i = snake.length - 1; i >= 0; i--) {
       final p = snake[i];
-      final isHead = i == 0;
-      final paint = Paint()
-        ..color = isHead ? const Color(0xFF7DFFB0) : const Color(0xFF3DDC84);
+      final c = Color.lerp(const Color(0xFF8CFFBA), const Color(0xFF1E9E55), i / last)!;
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTWH(p.x * cell + 1, p.y * cell + 1, cell - 2, cell - 2),
-          Radius.circular(cell * 0.3),
+          Radius.circular(cell * (i == 0 ? 0.42 : 0.32)),
         ),
-        paint,
+        Paint()..color = c,
       );
     }
-    canvas.drawCircle(
-      Offset((food.x + 0.5) * cell, (food.y + 0.5) * cell),
-      cell * 0.36,
-      Paint()..color = AppColors.accent,
+
+    // Gözler
+    if (snake.isNotEmpty) {
+      final h = snake.first;
+      final hc = Offset((h.x + 0.5) * cell, (h.y + 0.5) * cell);
+      final fwd = Offset(dir.x.toDouble(), dir.y.toDouble());
+      final side = Offset(-fwd.dy, fwd.dx);
+      for (final sgn in const [-1.0, 1.0]) {
+        final e = hc + fwd * (cell * 0.16) + side * (sgn * cell * 0.2);
+        canvas.drawCircle(e, cell * 0.14, Paint()..color = Colors.white);
+        canvas.drawCircle(
+          e + fwd * (cell * 0.04),
+          cell * 0.07,
+          Paint()..color = const Color(0xFF10131C),
+        );
+      }
+    }
+    canvas.restore();
+
+    canvas.drawRRect(
+      board,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = const Color(0x22FFFFFF),
     );
   }
 

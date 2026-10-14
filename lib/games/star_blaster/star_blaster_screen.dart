@@ -21,6 +21,9 @@ class _Rock {
   final double speed;
 }
 
+Color _rockBase(_Rock k) =>
+    Color.lerp(const Color(0xFF6B7280), const Color(0xFFFF8A4D), 1 - k.hp / k.maxHp)!;
+
 class _Bullet {
   _Bullet(this.x, this.y);
 
@@ -247,12 +250,22 @@ class _StarBlasterScreenState extends State<StarBlasterScreen>
                                       height: k.r * 2,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                        color: Color.lerp(
-                                          const Color(0xFF6B7280),
-                                          const Color(0xFFFF8A4D),
-                                          1 - k.hp / k.maxHp,
+                                        gradient: RadialGradient(
+                                          center: const Alignment(-0.4, -0.45),
+                                          colors: [
+                                            Color.lerp(_rockBase(k), Colors.white, 0.35)!,
+                                            _rockBase(k),
+                                            Color.lerp(_rockBase(k), Colors.black, 0.4)!,
+                                          ],
+                                          stops: const [0, 0.5, 1],
                                         ),
                                         shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: _rockBase(k).withAlpha(k.maxHp > 1 ? 80 : 40),
+                                            blurRadius: 12,
+                                          ),
+                                        ],
                                       ),
                                       child: k.maxHp > 1
                                           ? Text(
@@ -273,8 +286,15 @@ class _StarBlasterScreenState extends State<StarBlasterScreen>
                                       width: 4,
                                       height: 14,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFFFFC94D),
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [Colors.white, Color(0xFFFFC94D)],
+                                        ),
                                         borderRadius: BorderRadius.circular(2),
+                                        boxShadow: const [
+                                          BoxShadow(color: Color(0xAAFFC94D), blurRadius: 8),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -286,6 +306,9 @@ class _StarBlasterScreenState extends State<StarBlasterScreen>
                                       Icons.navigation_rounded,
                                       size: _shipR * 2,
                                       color: AppColors.accent,
+                                      shadows: [
+                                        Shadow(color: Color(0xCCFF5E7E), blurRadius: 16),
+                                      ],
                                     ),
                                   ),
                                 if (_time < 2.5)

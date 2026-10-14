@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'backdrop.dart';
+import 'game_prefs.dart';
 import 'mini_game.dart';
 
 /// "Sürpriz oyun" mantığı: listeden rastgele bir oyun seçer ve açar.
@@ -32,8 +34,7 @@ class RandomGame {
   static void replaceWithRandom(BuildContext context) {
     final game = pick();
     if (game == null) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (_) => game.builder()),
-    );
+    GamePrefs.instance.markPlayed(game.id);
+    Navigator.of(context).pushReplacement(gameRoute(game));
   }
 }

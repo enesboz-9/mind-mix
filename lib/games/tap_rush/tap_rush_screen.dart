@@ -146,18 +146,53 @@ class _TapRushScreenState extends State<TapRushScreen> {
                                   return SizedBox(
                                     width: _size,
                                     height: _size,
-                                    child: Center(
-                                      child: GestureDetector(
-                                        onTapDown: (_) => _onHit(),
-                                        child: Container(
-                                          width: _size * value,
-                                          height: _size * value,
-                                          decoration: const BoxDecoration(
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        // Süre halkası: hedef küçüldükçe içindeki disk halkaya yaklaşır.
+                                        Container(
+                                          width: _size * 0.5,
+                                          height: _size * 0.5,
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: AppColors.accent,
+                                            border: Border.all(
+                                              color: Colors.white.withAlpha(60),
+                                              width: 2,
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                        GestureDetector(
+                                          onTapDown: (_) => _onHit(),
+                                          child: Container(
+                                            width: _size * value,
+                                            height: _size * value,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: const RadialGradient(
+                                                center: Alignment(-0.3, -0.35),
+                                                colors: [Color(0xFFFFB3C1), AppColors.accent],
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(0x99FF5E7E),
+                                                  blurRadius: 22,
+                                                  spreadRadius: 2,
+                                                ),
+                                              ],
+                                            ),
+                                            child: Center(
+                                              child: Container(
+                                                width: _size * value * 0.28,
+                                                height: _size * value * 0.28,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },

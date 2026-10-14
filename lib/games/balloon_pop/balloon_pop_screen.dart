@@ -18,6 +18,51 @@ class _Balloon {
   final Color color;
 }
 
+class _Burst {
+  _Burst(this.x, this.y, this.color);
+
+  final double x;
+  final double y;
+  final Color color;
+  double age = 0;
+}
+
+/// Balon patlayınca çıkan kısa parçacık efekti.
+class _BurstPainter extends CustomPainter {
+  _BurstPainter(this.t, this.color);
+
+  final double t; // 0..1
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final e = Curves.easeOutCubic.transform(t.clamp(0.0, 1.0).toDouble());
+    final alpha = ((1 - t) * 255).clamp(0.0, 255.0).round();
+    final paint = Paint()..color = color.withAlpha(alpha);
+    for (var k = 0; k < 10; k++) {
+      final a = k * math.pi * 2 / 10;
+      final d = 10 + 30 * e;
+      canvas.drawCircle(
+        c + Offset(math.cos(a) * d, math.sin(a) * d),
+        (1 - t) * 4.5 + 0.5,
+        paint,
+      );
+    }
+    canvas.drawCircle(
+      c,
+      12 + 26 * e,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = Colors.white.withAlpha((alpha * 0.6).round()),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _BurstPainter old) => old.t != t;
+}
+
 /// Yükselen balonları patlat. Kaçan balon bir can götürür.
 class BalloonPopScreen extends StatefulWidget {
   const BalloonPopScreen({super.key});
@@ -45,6 +90,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
   late final GameLoop _loop;
 
   final List<_Balloon> _balloons = [];
+  final List<_Burst> _bursts = [];
   double _spawn = 0;
   int _lives = _maxLives;
   int _pops = 0;
@@ -72,6 +118,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
   void _start() {
     setState(() {
       _balloons.clear();
+      _bursts.clear();
       _spawn = 0.6;
       _lives = _maxLives;
       _pops = 0;
@@ -84,6 +131,10 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
   void _tick(double dt) {
     if (_over) return;
     final base = math.min(0.7, 0.24 + _pops * 0.005);
+    for (final p in _bursts) {
+      p.age += dt;
+    }
+    _bursts.removeWhere((p) => p.age > 0.45);
     _spawn -= dt;
     if (_spawn <= 0) {
       _spawn = math.max(0.35, 1.0 - _pops * 0.012) * (0.8 + _rnd.nextDouble() * 0.4);
@@ -124,6 +175,7 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
     Sfx.correct();
     setState(() {
       _balloons.remove(b);
+      _bursts.add(_Burst(b.x, b.y, b.color));
       _pops++;
     });
   }
@@ -184,13 +236,44 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
                                       height: _bh,
                                       child: Column(
                                         children: [
-                                          Container(
-                                            width: _bw,
-                                            height: _bh - 14,
-                                            decoration: BoxDecoration(
-                                              color: b.color,
-                                              borderRadius: BorderRadius.circular(_bw),
-                                            ),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: _bw,
+                                                height: _bh - 14,
+                                                decoration: BoxDecoration(
+                                                  gradient: RadialGradient(
+                                                    center: const Alignment(-0.35, -0.45),
+                                                    radius: 0.95,
+                                                    colors: [
+                                                      Color.lerp(b.color, Colors.white, 0.55)!,
+                                                      b.color,
+                                                      Color.lerp(b.color, Colors.black, 0.25)!,
+                                                    ],
+                                                    stops: const [0, 0.55, 1],
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(_bw),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: b.color.withAlpha(70),
+                                                      blurRadius: 14,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: _bw * 0.2,
+                                                top: (_bh - 14) * 0.14,
+                                                child: Container(
+                                                  width: _bw * 0.16,
+                                                  height: (_bh - 14) * 0.22,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white.withAlpha(110),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           Container(
                                             width: 2,
@@ -199,6 +282,17 @@ class _BalloonPopScreenState extends State<BalloonPopScreen>
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                ),
+                              for (final p in _bursts)
+                                Positioned(
+                                  left: p.x * w - 45,
+                                  top: p.y * h - 45,
+                                  child: IgnorePointer(
+                                    child: CustomPaint(
+                                      size: const Size(90, 90),
+                                      painter: _BurstPainter(p.age / 0.45, p.color),
                                     ),
                                   ),
                                 ),

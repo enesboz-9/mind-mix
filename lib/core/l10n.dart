@@ -15,6 +15,20 @@ class AppStrings {
   String get surpriseMe => p('Surprise me!', 'Sürpriz yap!');
   String get randomGame => p('Random game', 'Rastgele oyun');
   String gamesCount(int n) => p('$n games', '$n oyun');
+  String get allGames => p('All games', 'Tüm oyunlar');
+  String get filterAll => p('All', 'Tümü');
+  String get favorites => p('Favorites', 'Favoriler');
+  String get recentlyPlayed => p('Recently played', 'Son oynananlar');
+  String get dailyGame => p('Game of the day', 'Günün oyunu');
+  String get newBadge => p('NEW', 'YENİ');
+  String get searchHint => p('Search games…', 'Oyun ara…');
+  String get noResults => p('No games found', 'Oyun bulunamadı');
+  String get noFavorites => p(
+        'Tap the heart on a game to add it here.',
+        'Bir oyunun kalbine dokun, burada görünsün.',
+      );
+  String playedOf(int played, int total) =>
+      p('$played / $total played', '$played / $total oynandı');
   String get musicTooltip => p('Music', 'Müzik');
   String get exit => p('Exit', 'Çık');
   String get best => p('Best', 'En iyi');

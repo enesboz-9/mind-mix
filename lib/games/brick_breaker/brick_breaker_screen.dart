@@ -257,8 +257,26 @@ class _BrickBreakerScreenState extends State<BrickBreakerScreen>
                                       rect: _brickRect(i),
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
-                                          color: _rowColors[(i ~/ _cols) % _rowColors.length],
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Color.lerp(
+                                                _rowColors[(i ~/ _cols) % _rowColors.length],
+                                                Colors.white,
+                                                0.28,
+                                              )!,
+                                              _rowColors[(i ~/ _cols) % _rowColors.length],
+                                            ],
+                                          ),
                                           borderRadius: BorderRadius.circular(6),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: _rowColors[(i ~/ _cols) % _rowColors.length]
+                                                  .withAlpha(70),
+                                              blurRadius: 8,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -271,6 +289,9 @@ class _BrickBreakerScreenState extends State<BrickBreakerScreen>
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(color: Color(0xAAFFFFFF), blurRadius: 14),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -281,8 +302,15 @@ class _BrickBreakerScreenState extends State<BrickBreakerScreen>
                                     width: _padW,
                                     height: _padH,
                                     decoration: BoxDecoration(
-                                      color: AppColors.accent,
+                                      gradient: const LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [Color(0xFFFF9AB0), AppColors.accent],
+                                      ),
                                       borderRadius: BorderRadius.circular(8),
+                                      boxShadow: const [
+                                        BoxShadow(color: Color(0x88FF5E7E), blurRadius: 14),
+                                      ],
                                     ),
                                   ),
                                 ),
