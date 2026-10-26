@@ -9,7 +9,7 @@ workflows:
       android_signing:
         - mind_mix_keystore   # Codemagic > Code signing identities'te bu isimle yükle
       groups:
-        - google_play            # (opsiyonel) GCLOUD_SERVICE_ACCOUNT_CREDENTIALS burada
+        - google_play         # (opsiyonel) GCLOUD_SERVICE_ACCOUNT_CREDENTIALS burada
     triggering:
       events:
         - push
@@ -55,15 +55,15 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 45
     integrations:
-      app_store_connect: codemagic   # Codemagic > Team integrations > App Store Connect'te bu isimle ekle
+      app_store_connect: codemagic   # Team integrations > App Store Connect'teki isimle aynı olmalı
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
       groups:
-        - ios_signing          # içinde CERTIFICATE_PRIVATE_KEY (Secure işaretli) olacak
+        - ios_signing          # içinde CERTIFICATE_PRIVATE_KEY (Secure) olacak
       vars:
-        BUNDLE_ID: "com.bnovative.mindMix"
+        BUNDLE_ID: "com.bnovative.mindMix"   # App Store Connect ve Xcode'daki ID ile birebir aynı olmalı
     triggering:
       events:
         - push
