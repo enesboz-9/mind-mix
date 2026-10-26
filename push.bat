@@ -37,6 +37,12 @@ REM CRLF uyarilarini kapat
 git config core.autocrlf false
 git config core.safecrlf false
 
+REM Eski Color Match dosyalari yerelde kalmissa temizle (zip ustune acilinca silinmez)
+if exist "lib\games\color_match" rmdir /s /q "lib\games\color_match"
+if exist "test\color_match_test.dart" del /q "test\color_match_test.dart"
+
+REM Depoyu bu klasore birebir esitle: klasorde olmayan veya .gitignore'a giren eski dosyalar repodan silinir
+git rm -r -q --cached . >nul 2>nul
 git add -A
 git status --short
 

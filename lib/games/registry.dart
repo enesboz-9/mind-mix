@@ -35,7 +35,6 @@ import 'emoji_hunt/emoji_hunt_screen.dart';
 import 'tap_storm/tap_storm_screen.dart';
 import 'chimp_test/chimp_test_screen.dart';
 import 'clock_read/clock_read_screen.dart';
-import 'color_match/color_match_screen.dart';
 import 'color_words/color_words_screen.dart';
 import 'dot_count/dot_count_screen.dart';
 import 'flip_pairs/flip_pairs_screen.dart';
@@ -70,16 +69,6 @@ import 'hop_rush/hop_rush_screen.dart';
 
 /// Ana menüde görünen oyunlar. Yeni oyun eklemek için buraya bir satır ekle.
 final List<MiniGame> allGames = [
-  MiniGame(
-    id: 'color_match',
-    nameEn: 'Color Match',
-    nameTr: 'Renk Eşle',
-    descEn: 'Memorize a color, find its exact twin.',
-    descTr: 'Rengi aklında tut, aynısını bul.',
-    icon: Icons.palette_rounded,
-    color: const Color(0xFFFF5E7E),
-    builder: () => const ColorMatchScreen(),
-  ),
   MiniGame(
     id: 'odd_one_out',
     nameEn: 'Odd One Out',

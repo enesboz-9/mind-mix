@@ -9,7 +9,6 @@ enum GameCategory { memory, reflex, math, word, puzzle, arcade }
 /// (eklenmezse oyun "Arcade" sayılır).
 const Map<String, GameCategory> _categoryById = {
   // Hafıza
-  'color_match': GameCategory.memory,
   'sequence_echo': GameCategory.memory,
   'flip_pairs': GameCategory.memory,
   'number_memory': GameCategory.memory,

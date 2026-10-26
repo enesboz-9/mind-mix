@@ -1,10 +1,10 @@
 # Surprise Games
 
-Tek uygulamada 66 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
+Tek uygulamada 65 hızlı mini oyun. Çevrimdışı, hesapsız, reklamsız.
 
 **Sürpriz düğmesi:** Ana ekrandaki "Sürpriz yap!" düğmesi rastgele bir oyun açar. Oyun içindeki üst barda (zar simgesi) ve oyun sonu panelinde de aynı düğme vardır; oyundan çıkmadan başka rastgele oyuna geçebilirsin.
 
-Oyunlar: Color Match, Odd One Out, Sequence Echo, Math Rush, Lights Out, Tap Rush, Letter Hunt, Number Order, Arrow Rule, Mole Hunt, Chimp Test, Color Words, Pattern Finder, Target Sum, Dot Count, Number Memory, Shape Sort, Read the Clock, Quick Compare, Time Stop, Slide Puzzle, Grid Memory, Reflex, Higher or Lower, Timing Bar, Flip Pairs ve yeni eklenenler:
+Oyunlar: Odd One Out, Sequence Echo, Math Rush, Lights Out, Tap Rush, Letter Hunt, Number Order, Arrow Rule, Mole Hunt, Chimp Test, Color Words, Pattern Finder, Target Sum, Dot Count, Number Memory, Shape Sort, Read the Clock, Quick Compare, Time Stop, Slide Puzzle, Grid Memory, Reflex, Higher or Lower, Timing Bar, Flip Pairs ve yeni eklenenler:
 
 | Yeni oyun | Kısaca |
 |---|---|
@@ -80,9 +80,8 @@ lib/core/game_loop.dart             aksiyon oyunları için kare döngüsü
 lib/core/game_shell.dart            ortak HUD, düğme, oyun sonu paneli
 lib/games/registry.dart             oyun listesi
 lib/games/<oyun>/                   her oyun kendi klasöründe
-test/color_match_test.dart          Color Match zorluk ve kart üretimi testleri
 ```
 
 ## Not
-- Uygulama ikonu ve `ios/.../AppIcon` şimdilik Color Match ikonudur. Yeni bir `assets/logo/icon.png` + `icon_foreground.png` koyup `dart run flutter_launcher_icons` çalıştır.
+- Uygulama ikonu: zar + yıldız teması (`assets/logo/icon.png`, `icon_foreground.png`). Değiştirirsen `dart run flutter_launcher_icons` çalıştır.
 - Müzik/efektler `tools/generate_audio.py` ile üretilmiş özgün seslerdir.
